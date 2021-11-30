@@ -1,51 +1,98 @@
-# Unity-Package-Template
-UPM (Unity Package Manager) ready GitHub repository for Unity
-New Unity packages system is very easy to use and make your project much more cleaner.
-The repository helps you to create your own Unity package with dependecies.
+# Unity-Saver
+![npm](https://img.shields.io/npm/v/extensions.unity.saver) ![License](https://img.shields.io/github/license/IvanMurzak/Unity-Saver)
 
-# How to use
-- "Use this template" green button at top right corner of GitHub page
-- Clone your new repository
-- Add all your stuff to <code>Assets/_PackageRoot directory</code>
-- Update <code>Assets/_PackageRoot/package.json</code> to yours
-- (on Windows) execute <code>gitSubTreePushToUPM.bat</code>
-- (on Mac) execute <code>gitSubTreePushToUPM.makefile</code>
+Encrypted local data storage in Unity runtime on any platform. Thread safe, Unity-Saver uses dedicated non-main thread for Read/Write operations with files.
+Data can be stored in different locations:
+- :white_check_mark: Persistant - Regular Unity PersistantDataStorage location
+  - ✔️ iOS
+  - ✔️ Android
+  - ✔️ Standalone
+- :white_check_mark: Local - current location of executed app 
+  - :x: iOS
+  - :x: Android
+  - ✔️ Standalone
+- :white_check_mark: Custom - any path on your own
+  - :x: iOS
+  - :x: Android
+  - ✔️ Standalone
 
-- (optional) Create release from UPM branch on GitHub web page for support different versions
+![Unity Saver Settings](https://imgur.com/0RQeUQg.gif)
 
-![alt text](https://neogeek.dev/images/creating-custom-packages-for-unity-2018.3--git-release.png)
+# How to install
+- Install [ODIN Inspector](https://odininspector.com/)
+- Add this code to <code>/Packages/manifest.json</code>
+```json
+{
+  "dependencies": {
+    "extensions.unity.saver": "1.0.6",
+  },
+  "scopedRegistries": [
+    {
+      "name": "Unity Extensions",
+      "url": "https://registry.npmjs.org",
+      "scopes": [
+        "extensions.unity"
+      ]
+    }
+  ]
+}
+```
 
+# Usage API
+Usage is very simple, you have access to a data through <code>Data</code> property in saver class.
+- <code>Data</code> - current data with read & write permission (does not read and write from file)
+- <code>DefaultData</code> - access to default data, this data whould be taken on Load operation, only if file is missed or currupted
+- <code>Load()</code> - force to execute load from a file operation, returns <code>async Task</code>
+- <code>Save()</code> - insta save current <code>Data</code> to a file, returns <code>async Task</code>
+- <code>SaveDelay()</code> - put save operation in a queue, if the same file is going to be saved twice, just single call will be executed. Very useful when data changes very often and required to call Save often as well. You may call SaveDelay as many times as need and do not worry about wasting CPU resources for continuously writing data into file.
 
-# How to import your package to Unity project
-You may use one of the variants
+# How to use in MonoBehaviour
+```C#
+using Extensions.Saver;
 
-## Variant 1
-- Select "Add package from git URL"
-- Paste URL to your GitHub repository with simple modification:
-- <code>https://github.com/USER/REPO.git#upm</code> 
-Dont forget to replace **USER** and **REPO** to yours
+public class TestMonoBehaviourSaver : SaverMonoBehaviour<TestData>
+{
+    protected override string SaverPath => "TestDatabase";
+    protected override string SaverFileName => "testMonoBehaviour.data";
+}
+```
 
-![alt text](https://neogeek.dev/images/creating-custom-packages-for-unity-2018.3--package-manager.png)
+# How to use in ScriptableObject
+```C#
+using UnityEngine;
+using Extensions.Saver;
 
-### **Or** you may use special version if you create one  
-<code>https://github.com/USER/REPO.git#v1.0.0</code>
-Dont forget to replace **USER** and **REPO** to yours
+[CreateAssetMenu(menuName = "Example (Saver)/Test Scriptable Object Saver", fileName = "Test Scriptable Object Saver", order = 0)]
+public class TestScriptableObjectSaver : SaverScriptableObject<TestData>
+{
+    protected override string SaverPath => "TestDatabase";
+    protected override string SaverFileName => "testScriptableObject.data";
 
-## Variant 2
-Modify manifest.json file. Change <code>"your.own.package"</code> to the name of your package.
-Dont forget to replace **USER** and **REPO** to yours.
-<pre><code>{
-    "dependencies": {
-        "your.own.package": "https://github.com/USER/REPO.git#upm"
+    protected override void OnDataLoaded(TestData data)
+    {
+        
     }
 }
-</code></pre>
+```
 
-### **Or** you may use special version if you create one
-Dont forget to replace **USER** and **REPO** to yours.
-<pre><code>{
-    "dependencies": {
-        "your.own.package": "https://github.com/USER/REPO.git#v1.0.0"
+# How to use in C# class
+```C#
+using System;
+using System.Threading.Tasks;
+using Extensions.Saver;
+
+public class TestClassSaver
+{
+    public Saver<TestData> saver;
+
+    // Should be called from main thread, in Awake or Start method for example
+    public void Init()
+    {
+        saver = new Saver<TestData>("TestDatabase", "testClass.data", new TestData());
     }
+
+    public TestData Load() => saver?.Load();
+
+    public async Task Save(Action onComplete = null) => await saver?.Save(onComplete);
 }
-</code></pre>
+```

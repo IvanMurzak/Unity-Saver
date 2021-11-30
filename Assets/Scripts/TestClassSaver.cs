@@ -14,5 +14,5 @@ public class TestClassSaver
 
     public TestData Load() => saver?.Load();
 
-    public async Task Load(Action onComplete = null) => await saver?.Save(onComplete);
+    public async Task Save(Action onComplete = null) => await saver?.Save(onComplete);
 }

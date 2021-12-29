@@ -20,9 +20,10 @@ namespace Extensions.Saver
 
 			EncryptionUtils.Init();
 
-			PersistantDataPath = SaverInitializer.settings.Location;
+			PersistantDataPath = SaverInitializer.Config.Location;
 
-			Debug.Log($"Saver.Init {PersistantDataPath}");
+			if (SaverInitializer.Config.debug)
+				Debug.Log($"Saver.Init {PersistantDataPath}");
 		}
 		private static string PersistantDataPath = null;
 
@@ -43,7 +44,8 @@ namespace Extensions.Saver
 		}
 		public static void Save(T data, string fullPath)
 		{
-			Debug.Log($"Save:{fullPath}");
+			if (SaverInitializer.Config.debug)
+				Debug.Log($"Save:{fullPath}");
 			try
 			{
 				Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
@@ -61,7 +63,8 @@ namespace Extensions.Saver
 		}
 		public static T Load(string fullPath)
 		{
-			Debug.Log($"Load:{fullPath}");
+			if (SaverInitializer.Config.debug)
+				Debug.Log($"Load:{fullPath}");
 			T data;
 			if (!File.Exists(fullPath))
 			{
@@ -90,7 +93,8 @@ namespace Extensions.Saver
 		}
 		public static void DeleteAllSaves()
 		{
-			Debug.Log($"DeleteAllSaves at path: {PersistantDataPath}");
+			if (SaverInitializer.Config.debug)
+				Debug.Log($"DeleteAllSaves at path: {PersistantDataPath}");
 			if (Directory.Exists(PersistantDataPath))
 				Directory.Delete(PersistantDataPath, true);
 		}
@@ -204,20 +208,23 @@ namespace Extensions.Saver
 			Init();
 			if (DefaultData == null)
 			{
-				Debug.LogError($"Default data is null. path={FullPath(path, fileName)}");
+				if (SaverInitializer.Config.debug)
+					Debug.LogError($"Default data is null. path={FullPath(path, fileName)}");
 			}
 			if (IsFileExists())
 			{
 				data = Load(path, fileName);
 				if (data == null)
 				{
-					Debug.LogError($"Loaded data is null. path={FullPath(path, fileName)}");
+					if (SaverInitializer.Config.debug)
+						Debug.LogError($"Loaded data is null. path={FullPath(path, fileName)}");
 					data = DefaultData.Copy();
 				}
 			}
 			else
 			{
-				Debug.Log($"Loading default data. path={FullPath(path, fileName)}");
+				if (SaverInitializer.Config.debug)
+					Debug.Log($"Loading default data. path={FullPath(path, fileName)}");
 				data = DefaultData.Copy();
 			}
 			Loaded = true;

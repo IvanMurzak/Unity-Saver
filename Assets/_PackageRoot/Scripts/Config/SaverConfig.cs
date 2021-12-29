@@ -13,6 +13,7 @@ namespace Extensions.Saver
                                                                 public const    string  PATH_FOR_RESOURCES_LOAD     = "UnitySaver Settings";
 
         [BoxGroup("B", false), HorizontalGroup("B/H")]
+        [TitleGroup("B/H/Settings")]                            public          bool    debug                       = true;
         [TitleGroup("B/H/Settings")]                            public          Place   place                       = Place.UnityPersistant;
         [TitleGroup("B/H/Settings"), ShowIf("IsCustomPlace")]   public          string  customLocation;
 

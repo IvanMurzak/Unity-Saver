@@ -24,7 +24,8 @@ namespace Extensions.Saver
 		{
 			if (saver == null)
 			{
-				Debug.Log($"Saver had not been initialized. Doing it automaticly.");
+				if (SaverInitializer.Config.debug)
+					Debug.Log($"Saver had not been initialized. Doing it automaticly.");
 				saver = new Saver<T>();
 			}
 			Data = PrepareData(saver.Load());

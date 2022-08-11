@@ -24,7 +24,7 @@ Data can be stored in different locations:
 ```json
 {
   "dependencies": {
-    "extensions.unity.saver": "1.0.6",
+    "extensions.unity.saver": "1.0.8",
   },
   "scopedRegistries": [
     {

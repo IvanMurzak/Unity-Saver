@@ -1,5 +1,5 @@
 # Unity-Saver
-![npm](https://img.shields.io/npm/v/extensions.unity.saver) ![License](https://img.shields.io/github/license/IvanMurzak/Unity-Saver)
+![npm](https://img.shields.io/npm/v/extensions.unity.saver) ![License](https://img.shields.io/github/license/IvanMurzak/Unity-Saver) [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 
 Encrypted local data storage in Unity runtime on any platform. Thread safe, Unity-Saver uses dedicated non-main thread for Read/Write operations with files.
 Data can be stored in different locations:

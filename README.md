@@ -22,7 +22,7 @@ Data can be stored in different locations:
 - Install [ODIN Inspector](https://odininspector.com/)
 - [Install OpenUPM-CLI](https://github.com/openupm/openupm-cli#installation)
 - Open command line in Unity project folder
-- `openupm --registry https://registry.npmjs.org add extensions.unity.saver`
+- `openupm add extensions.unity.saver`
 
 # How to install - Option 2
 - Install [ODIN Inspector](https://odininspector.com/)
@@ -34,10 +34,12 @@ Data can be stored in different locations:
   },
   "scopedRegistries": [
     {
-      "name": "Unity Extensions",
-      "url": "https://registry.npmjs.org",
+      "name": "package.openupm.com",
+      "url": "https://package.openupm.com",
       "scopes": [
-        "extensions.unity"
+        "extensions.unity.saver",
+        "com.cysharp",
+        "com.neuecc"
       ]
     }
   ]

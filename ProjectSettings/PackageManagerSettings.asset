@@ -24,16 +24,9 @@ MonoBehaviour:
     m_Scopes: []
     m_IsDefault: 1
     m_Capabilities: 7
-  - m_Id: scoped:Unity Extensions
-    m_Name: Unity Extensions
-    m_Url: https://registry.npmjs.org
-    m_Scopes:
-    - extensions.unity
-    m_IsDefault: 0
-    m_Capabilities: 0
-  - m_Id: scoped:NPM
-    m_Name: NPM
-    m_Url: https://registry.npmjs.org
+  - m_Id: scoped:package.openupm.com
+    m_Name: package.openupm.com
+    m_Url: https://package.openupm.com
     m_Scopes:
     - com.cysharp
     - com.neuecc
@@ -44,16 +37,18 @@ MonoBehaviour:
   m_RegistryInfoDraft:
     m_ErrorMessage: 
     m_Original:
-      m_Id: scoped:Unity Extensions
-      m_Name: Unity Extensions
-      m_Url: https://registry.npmjs.org
+      m_Id: scoped:package.openupm.com
+      m_Name: package.openupm.com
+      m_Url: https://package.openupm.com
       m_Scopes:
-      - extensions.unity
+      - com.cysharp
+      - com.neuecc
       m_IsDefault: 0
       m_Capabilities: 0
     m_Modified: 0
-    m_Name: Unity Extensions
-    m_Url: https://registry.npmjs.org
+    m_Name: package.openupm.com
+    m_Url: https://package.openupm.com
     m_Scopes:
-    - extensions.unity
+    - com.cysharp
+    - com.neuecc
     m_SelectedScopeIndex: 0

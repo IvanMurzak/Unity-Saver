@@ -1,13 +1,13 @@
 # Unity-Saver
 ![npm](https://img.shields.io/npm/v/extensions.unity.saver) [![openupm](https://img.shields.io/npm/v/extensions.unity.saver?label=openupm&registry_uri=https://package.openupm.com)](https://openupm.com/packages/extensions.unity.saver/) ![License](https://img.shields.io/github/license/IvanMurzak/Unity-Saver) [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://stand-with-ukraine.pp.ua)
 
-Encrypted local data storage in Unity runtime on any platform. Thread safe, Unity-Saver uses dedicated non-main thread for Read/Write operations with files.
+Encrypted local data storage in Unity runtime on any platform. Thread safe, Unity-Saver uses a dedicated non-main thread for Read/Write operations with files.
 Data can be stored in different locations:
-- :white_check_mark: Persistant - Regular Unity PersistantDataStorage location
+- :white_check_mark: Persistent - Regular Unity PersistantDataStorage location
   - ✔️ iOS
   - ✔️ Android
   - ✔️ Standalone
-- :white_check_mark: Local - current location of executed app 
+- :white_check_mark: Local - the current location of the executed app 
   - :x: iOS
   - :x: Android
   - ✔️ Standalone
@@ -21,7 +21,7 @@ Data can be stored in different locations:
 # How to install - Option 1 (RECOMMENDED)
 - Install [ODIN Inspector](https://odininspector.com/)
 - [Install OpenUPM-CLI](https://github.com/openupm/openupm-cli#installation)
-- Open command line in Unity project folder
+- Open a command line in Unity project folder
 - `openupm add extensions.unity.saver`
 
 # How to install - Option 2
@@ -30,7 +30,7 @@ Data can be stored in different locations:
 ```json
 {
   "dependencies": {
-    "extensions.unity.saver": "1.0.8",
+    "extensions.unity.saver": "1.0.9",
   },
   "scopedRegistries": [
     {
@@ -47,12 +47,12 @@ Data can be stored in different locations:
 ```
 
 # Usage API
-Usage is very simple, you have access to a data through <code>Data</code> property in saver class.
+Usage is very simple, you have access to data through <code>Data</code> property in the saver class.
 - <code>Data</code> - current data with read & write permission (does not read and write from file)
-- <code>DefaultData</code> - access to default data, this data whould be taken on Load operation, only if file is missed or currupted
+- <code>DefaultData</code> - access to default data, this data would be taken on Load operation, only if a file is missed or corrupted
 - <code>Load()</code> - force to execute load from a file operation, returns <code>async Task</code>
 - <code>Save()</code> - insta save current <code>Data</code> to a file, returns <code>async Task</code>
-- <code>SaveDelay()</code> - put save operation in a queue, if the same file is going to be saved twice, just single call will be executed. Very useful when data changes very often and required to call Save often as well. You may call SaveDelay as many times as need and do not worry about wasting CPU resources for continuously writing data into file.
+- <code>SaveDelay()</code> - put save operation in a queue, if the same file is going to be saved twice, just a single call will be executed. Very useful when data changes very often and required to call Save often as well. You may call SaveDelay as many times as needed and do not worry about wasting CPU resources for continuously writing data into a file.
 
 # How to use in MonoBehaviour
 ```C#
@@ -93,7 +93,7 @@ public class TestClassSaver
 {
     public Saver<TestData> saver;
 
-    // Should be called from main thread, in Awake or Start method for example
+    // Should be called from the main thread, in the Awake or Start method for example
     public void Init()
     {
         saver = new Saver<TestData>("TestDatabase", "testClass.data", new TestData());

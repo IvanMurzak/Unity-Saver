@@ -4,10 +4,10 @@ using Extensions.Saver;
 
 public class TestClassSaver
 {
-	public Saver<TestData> saver;
+    public Saver<TestData> saver;
 
     // Should be called from main thread, in Awake or Start method for example
-	public void Init()
+    public void Init()
     {
         saver = new Saver<TestData>("TestDatabase", "testClass.data", new TestData());
     }

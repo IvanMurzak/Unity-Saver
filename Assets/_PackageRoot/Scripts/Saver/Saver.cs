@@ -160,7 +160,7 @@ namespace Extensions.Saver
 			data = DefaultData.Copy();
 		}
 		[BoxGroup("Data", false), ButtonGroup("Data/Buttons2"), Button(ButtonSizes.Medium), GUIColor(1, .6f, .4f, 1)]
-		public void ClearDefaulData()
+		public void ClearDefaultData()
 		{
 			_defaultData = default(T);
 		}
@@ -198,12 +198,23 @@ namespace Extensions.Saver
 		public void SaveDelayed(Action onComplete = null) => SaveDelayed(TimeSpan.FromSeconds(1), onComplete);
 		public void SaveDelayed(TimeSpan delay, Action onComplete = null)
 		{
-			Observable.Timer(delay, Scheduler.ThreadPool)
-				.First()
-				.Subscribe(async x => await Save(onComplete))
-				.AddTo(Disposable);
+			//Observable.Timer(delay, Scheduler.ThreadPool)
+			//	.First()
+			//	.Subscribe(async x => await Save(onComplete))
+			//	.AddTo(Disposable);
+
+			// This more complex code supports pure NuGet ReactiveProperty package.
+			// UniRx.ObservableExtensions.Subscribe<T>
+			// System.ObservableExtensions.Subscribe<T>
+			UniRx.ObservableExtensions.Subscribe
+			(
+				Observable.Timer(delay, Scheduler.ThreadPool)
+					.First(),
+				async x => await Save(onComplete)
+			).AddTo(Disposable);
+
 		}
-		public T Load()
+        public T Load()
 		{
 			Init();
 			if (DefaultData == null)
